@@ -219,12 +219,11 @@ export function renderBookingSlotsForEmail(
   const listItems = slots
     .map(
       (slot) => `
-        <li>
+        <li style="display:block; margin-bottom: 8px">
           <strong>${slot.productTitle}</strong><br/>
           Price: €${slot.productPrice.toFixed(2)}<br/>
           From: ${new Date(slot.start).toLocaleString("de-AT")}<br/>
           To: ${new Date(slot.end).toLocaleString("de-AT")}<br/>
-          Status: ${slot.isBooked ? "Booked" : "Available"}
         </li>
       `
     )

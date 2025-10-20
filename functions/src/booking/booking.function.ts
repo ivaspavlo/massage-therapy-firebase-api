@@ -307,7 +307,7 @@ async function postBookingHandler(req: Request, res: Response): Promise<any> {
   let confirmToken;
   try {
     confirmToken = generateJwt(
-      { email: reqBody.email }, // Refactor
+      { userEmail: reqBody.email, createdAt: Date.now() },
       jwtSecret,
       { expiresIn: resetTokenExp }
     );
@@ -318,8 +318,9 @@ async function postBookingHandler(req: Request, res: Response): Promise<any> {
     res.status(500).json(generalError);
   }
 
-  const userName =
-    reqBody.name || (user?.firstname && user?.lastname)
+  const userNameFromReqBody = reqBody.name;
+  const userNameFromJwt =
+    user?.firstname && user?.lastname
       ? `${user?.firstname} ${user?.lastname}`
       : "";
 
@@ -330,7 +331,7 @@ async function postBookingHandler(req: Request, res: Response): Promise<any> {
     email: reqBody.email,
     comment: reqBody.comment,
     phone: reqBody.phone,
-    name: userName,
+    name: userNameFromReqBody || userNameFromJwt,
     confirmLink: `${uiUrl}/confirm-booking-admin/${confirmToken}`,
   });
 
