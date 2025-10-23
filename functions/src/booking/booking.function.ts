@@ -215,7 +215,7 @@ async function putBookingHandler(req: Request, res: Response): Promise<any> {
 }
 
 async function postBookingHandler(req: Request, res: Response): Promise<any> {
-  const uiUrl = process.env[ENV_KEYS.UI_URL];
+  const uiUrl = process.env[ENV_KEYS.UI_URL_LOCAL];
   const resetTokenExp = process.env[ENV_KEYS.RESET_TOKEN_EXP];
   const adminEmailAddress = process.env[ENV_SECRETS.ADMIN_MAIL]!;
   const jwtSecret = process.env[ENV_SECRETS.JWT_SECRET]!;
@@ -332,7 +332,7 @@ async function postBookingHandler(req: Request, res: Response): Promise<any> {
     comment: reqBody.comment,
     phone: reqBody.phone,
     name: userNameFromReqBody || userNameFromJwt,
-    confirmLink: `${uiUrl}/confirm-booking-admin/${confirmToken}`,
+    confirmLink: `${uiUrl}/admin/confirm-order/${confirmToken}`,
   });
 
   const transporter = nodemailer.createTransport({
